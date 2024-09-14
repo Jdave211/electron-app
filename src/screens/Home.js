@@ -16,6 +16,10 @@ export default function Home() {
       alert("Please select both languages before continuing.");
     } else {
       console.log(`Translating from ${fromLanguage} to ${toLanguage}`);
+      if (window.require) {
+        const { ipcRenderer } = window.require('electron');
+        ipcRenderer.send('resize-window', { width: 500, height: 200 }); // Resize the window
+      }
       navigate('/subtitles'); // Navigate to the Subtitles page
     }
   };

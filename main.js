@@ -1,7 +1,7 @@
 // main.js (Electron main process)
-const { app, BrowserWindow } = require("electron");
-const path = require("path");
-const isDev = require("electron-is-dev"); // To check if we're in development or production mode
+const { app, BrowserWindow, ipcMain } = require('electron');
+const path = require('path');
+const isDev = require('electron-is-dev');
 
 let mainWindow;
 
@@ -11,30 +11,35 @@ function createWindow() {
     height: 500,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false, // To use node features in React
+      contextIsolation: false,
       enableRemoteModule: true,
     },
   });
 
-  // Load the React app in development or production mode
   mainWindow.loadURL(
     isDev
-      ? "http://localhost:3000" // If in development mode
-      : `file://${path.join(__dirname, "build/index.html")}`, // Production build path
+      ? 'http://localhost:3000' 
+      : `file://${path.join(__dirname, 'build/index.html')}`
   );
 
-  mainWindow.on("closed", () => (mainWindow = null));
+  mainWindow.on('closed', () => (mainWindow = null));
+
+  // Listen for the resize-window event from the renderer process
+  ipcMain.on('resize-window', (event, size) => {
+    const { width, height } = size;
+    mainWindow.setSize(width, height);
+  });
 }
 
-app.on("ready", createWindow);
+app.on('ready', createWindow);
 
-app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
     app.quit();
   }
 });
 
-app.on("activate", () => {
+app.on('activate', () => {
   if (mainWindow === null) {
     createWindow();
   }

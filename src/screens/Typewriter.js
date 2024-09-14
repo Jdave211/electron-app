@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const Typewriter = ({ text, speed = 30 }) => {
+const Typewriter = ({ text, speed = 30, windowSize = 20 }) => {
   const [displayedText, setDisplayedText] = useState('');
 
   useEffect(() => {
@@ -8,18 +8,20 @@ const Typewriter = ({ text, speed = 30 }) => {
 
     let index = 0;
     const timer = setInterval(() => {
-      if (index < text.length) {
-        setDisplayedText((prev) => prev + text[index]);
-        index += 1;
-      } else {
+      // Show a sliding window of `windowSize` characters
+      setDisplayedText(text.slice(index, index + windowSize));
+      index += 1;
+
+      // Stop when we've displayed the entire text
+      if (index + windowSize > text.length) {
         clearInterval(timer);
       }
     }, speed);
 
     return () => clearInterval(timer); // Cleanup interval on unmount
-  }, [text, speed]);
+  }, [text, speed, windowSize]);
 
-  return <p>{displayedText}</p>;
+  return <p className="text-lg text-white">{displayedText}</p>; // Tailwind styling for text
 };
 
 export default Typewriter;
