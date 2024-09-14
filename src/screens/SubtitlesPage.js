@@ -17,32 +17,25 @@ export default function SubtitlesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-500 to-indigo-600 flex flex-col relative">
+    <div className="min-h-screen bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center relative">
 
-      {/* Close button centered at the top */}
-      <div className="absolute top-6 left-0 right-0 flex justify-center">
-        <button
-          onClick={handleClose}
-          className="text-white bg-transparent px-4 py-1 rounded-full hover:bg-white hover:text-black transition duration-300 ease-in-out"
-          aria-label="Close"
-          style={{ fontFamily: "monospace", fontSize: "1.5rem" }}
-        >
-          X
-        </button>
-      </div>
+      {/* Close button in the top-right corner */}
+      <button
+        onClick={handleClose}
+        className="absolute top-4 right-4 text-white bg-transparent px-4 py-2 rounded-full hover:bg-white hover:text-black transition duration-300 ease-in-out"
+        aria-label="Close"
+        style={{ fontFamily: "monospace", fontSize: "1.5rem" }}
+      >
+        X
+      </button>
 
-      <main className="flex flex-col items-center justify-center flex-grow px-4">
-        <section className="text-center mt-16 text-white">
-          {/* Sliding window typewriter effect */}
+      {/* Main content (Typewriter text) centered */}
+      <main className="flex items-center justify-center">
+        <section className="text-white text-center">
           <Typewriter text={text} speed={115} windowSize={50} />
         </section>
       </main>
-
-      <footer className="w-full py-4 bg-gray-900 text-center text-gray-400">
-        <p>
-          &copy; {new Date().getFullYear()} Placeholder. All rights reserved.
-        </p>
-      </footer>
+      
     </div>
   );
 }
