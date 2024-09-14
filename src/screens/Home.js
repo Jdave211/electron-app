@@ -1,9 +1,12 @@
 // src/App.js
 import React, { useState } from "react";
+import {useNavigate } from "react-router-dom";
+
 
 export default function Home() {
   const [fromLanguage, setFromLanguage] = useState("");
   const [toLanguage, setToLanguage] = useState("");
+  const navigate = useNavigate();
 
   const handleContinue = () => {
     if (fromLanguage === toLanguage) {
@@ -13,6 +16,7 @@ export default function Home() {
       alert("Please select both languages before continuing.");
     } else {
       console.log(`Translating from ${fromLanguage} to ${toLanguage}`);
+      navigate('/subtitles'); // Navigate to the Subtitles page
     }
   };
 
