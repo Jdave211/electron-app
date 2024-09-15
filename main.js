@@ -12,7 +12,8 @@ const gotNewText = (text) => {
 }
 
 function runPythonScript() {
-  child = spawn("C:\\Users\\Mateusz\\Documents\\Python\\.venv\\Scripts\\python.exe", ["C:\\Users\\Mateusz\\Documents\\Python\\mock_captions.py"]);
+  // child = spawn("C:\\Users\\Mateusz\\Documents\\Python\\.venv\\Scripts\\python.exe", ["C:\\Users\\Mateusz\\Documents\\Python\\mock_captions.py"]);
+  child = spawn("C:\\Users\\Mateusz\\Documents\\Python\\.venv\\Scripts\\python.exe", ["C:\\Users\\Mateusz\\Documents\\Python\\audio_test.py"]);
   child.stdout.on('data', (data) => {
     gotNewText(data.toString('utf-8'));
   });

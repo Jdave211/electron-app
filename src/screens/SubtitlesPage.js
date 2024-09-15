@@ -43,7 +43,7 @@ export default function SubtitlesPage() {
       {/* Main content (Typewriter text) centered */}
       <main className="flex items-center justify-center">
         <section className="text-white text-center">
-          <Typewriter text={text} speed={115} windowSize={50} />
+          {text}
         </section>
       </main>
       
