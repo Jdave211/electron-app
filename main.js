@@ -2,8 +2,20 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const isDev = require('electron-is-dev');
+const { spawn, exec } = require('child_process');
 
 let mainWindow;
+
+const gotNewText = (text) => {
+  mainWindow.webContents.send('gotText', text);
+}
+
+function runPythonScript() {
+  const child = spawn("C:\\Users\\Mateusz\\Documents\\Python\\.venv\\Scripts\\python.exe", ["C:\\Users\\Mateusz\\Documents\\Python\\mock_captions.py"]);
+  child.stdout.on('data', (data) => {
+    gotNewText(data.toString('utf-8'));
+  });
+}
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -11,8 +23,9 @@ function createWindow() {
     height: 500,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false,
+      contextIsolation: true,
       enableRemoteModule: true,
+      preload: path.join(__dirname, 'preload.js')
     },
   });
 
@@ -31,7 +44,10 @@ function createWindow() {
   });
 }
 
-app.on('ready', createWindow);
+app.on('ready', () => {
+  ipcMain.on('runPython', runPythonScript);
+  createWindow();
+});
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
