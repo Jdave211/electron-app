@@ -4,13 +4,14 @@ import Typewriter from "./Typewriter";
 
 export default function SubtitlesPage() {
   const navigate = useNavigate();
-  const [text, setText] = useState('text 1');
+  const [text, setText] = useState('...');
 
   const runPython = async () => {
     await window.electronAPI.runPythonScript();
   }
 
   useEffect(() => {
+    runPython();
     window.electronAPI.onGotNewText((value) => {
       setText(value);
     })
@@ -22,6 +23,7 @@ export default function SubtitlesPage() {
       const { ipcRenderer } = window.require('electron');
       ipcRenderer.send('resize-window', { width: 800, height: 500 }); // Resize the window
     }
+    window.electronAPI.killChild();
     navigate('/'); // Navigate back to the home page
   };
 
@@ -30,7 +32,7 @@ export default function SubtitlesPage() {
 
       {/* Close button in the top-right corner */}
       <button
-        onClick={runPython}
+        onClick={handleClose}
         className="absolute top-4 right-4 text-white bg-transparent px-4 py-2 rounded-full hover:bg-white hover:text-black transition duration-300 ease-in-out"
         aria-label="Close"
         style={{ fontFamily: "monospace", fontSize: "1.5rem" }}
