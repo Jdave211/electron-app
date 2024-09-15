@@ -123,7 +123,7 @@ export default function Home() {
 
       <footer className="w-full py-4 bg-gray-900 text-center text-gray-400">
         <p>
-          &copy; {new Date().getFullYear()} Placeholder. All rights reserved.
+          &copy; {new Date().getFullYear()} The Voices. All rights reserved.
         </p>
       </footer>
     </div>
