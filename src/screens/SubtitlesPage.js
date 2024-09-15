@@ -35,7 +35,7 @@ export default function SubtitlesPage() {
         aria-label="Close"
         style={{ fontFamily: "monospace", fontSize: "1.5rem" }}
       >
-        X
+        x
       </button>
 
       {/* Main content (Typewriter text) centered */}
